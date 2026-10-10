@@ -1,105 +1,68 @@
-# BottleCRM: Open Source Django CRM for Startups & Enterprises
+# LeadRescue — Revenue Recovery CRM
 
-A free, self-hosted, multi-tenant CRM built with Django REST Framework, SvelteKit and Flutter.
+**Catch the leads your team forgets. Follow up on every quote. See where sales are slipping away.**
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.12+-green.svg)
-![Django](https://img.shields.io/badge/django-6.x-green.svg)
-![SvelteKit](https://img.shields.io/badge/sveltekit-2.x-orange.svg)
-![Svelte](https://img.shields.io/badge/svelte-5-orange.svg)
-![Flutter](https://img.shields.io/badge/flutter-3.44+-blue.svg)
-![Coverage](./coverage-badge.svg)
+LeadRescue is an early-stage, industry-focused product built on the open-source BottleCRM foundation. Our first hypothesis is that home-service businesses lose profitable work when inbound inquiries and quotes do not receive timely, consistent follow-up.
 
-**BottleCRM is an open source CRM you run on your own infrastructure.** It covers the full
-customer lifecycle: leads, accounts, contacts, opportunities, support tickets, tasks and
-invoices: through a SvelteKit web app, a native Flutter mobile app, and a documented REST API
-sharing one Django backend. PostgreSQL Row-Level Security isolates each organization's data at
-the database layer, so a single deployment serves one startup or hundreds of tenants.
+This repository is the working product, not a claim that the recovery features are already complete. We are validating the problem with real businesses before promising revenue results or charging for features that are not ready.
 
-No per-seat pricing, no user caps, no feature paywall. MIT licensed: fork it, self-host it, own
-your data.
+## The problem we are testing
 
-**[Try it free →](https://bottlecrm.io/)** · [Features](https://bottlecrm.io/features) · [Product docs](https://bottlecrm.io/docs) · [Pricing](https://bottlecrm.io/pricing) · [Migrate from Salesforce or HubSpot](https://bottlecrm.io/migration)
+A business can pay for advertising, receive a quote request, and still lose the job because the lead was not answered, the quote was not followed up, or nobody owned the next step. Existing CRMs can store the record, but a record alone does not ensure the right person acts on it.
 
-(That's the marketing site's product documentation. For the technical documentation (self-hosting, architecture, the API, contributing) see [Documentation](#documentation) below.)
+**Initial customer hypothesis:** small-to-medium home-service companies (starting with renovation and HVAC contractors) that handle valuable inbound inquiries and quotes.
 
-## Why BottleCRM
+We will validate this with customer interviews and paid pilots before locking the product to one vertical.
 
-- **Free forever, MIT licensed**: unlimited users and records, no subscription. A genuinely
-  self-hosted CRM alternative to Salesforce, HubSpot and Pipedrive.
-- **Multi-tenant by design**: PostgreSQL Row-Level Security enforces tenant isolation in the
-  database, not just in application code. Run it for a single company or as a SaaS for many.
-- **Agent-ready REST API**: point Claude, Cursor, Codex, Gemini or any agent at the API with a
-  personal access token and let it search, create and update records *as you*, inheriting your
-  role, org and permissions. An OpenAPI schema ships with it, so the agent can discover the
-  endpoints itself.
-- **Web, native mobile and API**: one Django REST backend behind a Svelte 5 web app and a
-  Flutter app for iOS and Android.
-- **A stack you can actually hack on**: Django 6 / DRF and Svelte 5, not a bespoke in-house
-  framework. If your team writes Python, it can extend this on day one.
-- **Real support tooling**: a full helpdesk with SLA timers, approvals, escalations, macros and
-  a knowledge base, not a bolted-on ticket list.
+## Product direction
 
-## How it compares
+### Built on the existing BottleCRM foundation
+- Lead, contact, account, opportunity, task and activity management
+- Sales pipeline and deal tracking
+- Invoices, tickets, and a documented API
+- Existing web app, backend and mobile app from the upstream project
 
-| | BottleCRM | SaaS CRM (Salesforce, HubSpot) | Typical open source CRM |
-|---|---|---|---|
-| **Cost** | Free, unlimited users | Per seat, per month | Free core, often paid tiers |
-| **Hosting** | Self-hosted (managed hosting available) | Vendor cloud only | Self-hosted |
-| **Data ownership** | Total. It is your database | Vendor-controlled | Total |
-| **Multi-tenancy** | Database-level RLS | Not applicable | Uncommon |
-| **Native mobile app** | Yes, Flutter, iOS + Android | Yes | Uncommon |
-| **AI agent access** | Full REST API, per-user tokens | Proprietary add-ons | Uncommon |
-| **Stack** | Django REST + SvelteKit | Closed source | Varies |
-| **License** | MIT | Proprietary | Varies, often GPL/AGPL |
+### LeadRescue features to build and verify
+- **Follow-up queue:** highlight leads and quotes that have no next step or have passed their follow-up date.
+- **Response-time tracking:** record how quickly inquiries receive a first response when the data is available.
+- **Next-action reminders:** assign an owner and due date to each open lead; make overdue work visible.
+- **Quote recovery workflow:** create a repeatable follow-up sequence for quotes that have not received a response.
+- **Revenue recovery dashboard:** distinguish pipeline value, won revenue, and estimated opportunities; never label an estimate as recovered revenue.
+- **Audit-friendly reporting:** show what was contacted, when, by whom, and what happened next.
 
-## Quick start
+These items are a roadmap, not a statement that they are implemented today. Automatic customer messaging, email/WhatsApp integrations, and AI-written replies must be added, tested, and configured safely before being advertised.
 
-```bash
-git clone https://github.com/django-crm/Django-CRM.git
-cd Django-CRM
-docker compose up --build
-```
+## Our first validation plan
 
-Frontend at http://localhost:5181, API and Swagger UI at http://localhost:8000/swagger-ui/. See
-the [Docker quick start guide](docs/getting-started/docker-quick-start.md) for the default admin
-login, loading demo data, and what each service does.
+1. Interview 10 owners or sales managers in the target niche.
+2. Ask how inquiries arrive, how quotes are followed up, and what happens when staff are busy.
+3. Estimate the cost of missed follow-up using their real numbers—not generic industry claims.
+4. Offer a clearly scoped paid pilot to businesses that confirm the problem.
+5. Track baseline and pilot outcomes. Continue only if customers use the workflow and can see measurable value.
 
-## Documentation
+## Commercial model to test
 
-The full documentation (setup, self-hosting, architecture, the REST API, and contributing) is
-built from this repository's [`docs/`](docs/) with MkDocs Material and publishes to Read the Docs
-at <https://django-crm.readthedocs.io/en/latest/>. Four starting points:
+- One-time setup, pipeline configuration and data import
+- Monthly fee for managed workflows, reporting and support
+- Later: standardized hosted software subscription if multiple customers need the same workflow
 
-- **[Getting started](docs/getting-started/docker-quick-start.md)**: Docker and manual setup, first sign-in, demo data.
-- **[Self-hosting](docs/self-hosting/requirements.md)**: requirements, production deployment, PostgreSQL and Row-Level Security, backups, security hardening.
-- **[API reference](docs/api/conventions.md)**: authentication, conventions, and every documented endpoint.
-- **[Contributing](docs/contributing/development-setup.md)**: local development setup, testing, code style, and how to open a pull request.
+Pricing will be tested with customers. No savings, conversion uplift, or revenue recovery is guaranteed.
 
-## Contributing
+## Development principles
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, development checks, and pull request guidance.
+- Build the smallest feature that addresses a verified customer problem.
+- Preserve tenant isolation and permissions; never weaken security to make a demo easier.
+- Do not send messages to customers without the business's authorization and appropriate consent.
+- Keep credentials and customer data out of source control.
+- Test all changes and document deployment before using real customer data.
+- Keep estimates clearly separated from realized revenue.
 
-## Community
+## Technical foundation and attribution
 
-- **Issues**: [GitHub Issues](https://github.com/django-crm/Django-CRM/issues)
-- **Twitter**: [@micropyramid](https://twitter.com/micropyramid)
-- **Commercial Support**: [Contact us](https://micropyramid.com/contact/)
+LeadRescue is a modified working fork of [BottleCRM / Django-CRM](https://github.com/Django-CRM/Django-CRM), which uses Django REST Framework, SvelteKit, Flutter and PostgreSQL. Upstream project and contributor notices remain applicable. The upstream repository is MIT licensed; see [LICENSE](LICENSE) and preserve the required copyright and permission notice in redistributions.
 
-## License
+For the inherited application's original installation instructions and architecture, see the upstream project's documentation and the local `docs/` directory. This fork's LeadRescue-specific scope and roadmap are documented in [PRODUCT_PLAN.md](PRODUCT_PLAN.md).
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Current status
 
-## Sponsors
-
-We are grateful to the sponsors who support BottleCRM's continued development and maintenance.
-
-- [MicroPyramid](https://micropyramid.com/)
-
-We warmly welcome new sponsors. If you would like to support BottleCRM and help the project grow, please [get in touch](https://micropyramid.com/contact/).
-
-## Contributors
-
-This project exists thanks to all the people who contributed.
-
-[View all BottleCRM contributors](https://github.com/django-crm/Django-CRM/graphs/contributors).
+**Early build / validation stage.** The repository has been forked and branded for the LeadRescue direction. The customer problem, target niche, and proposed recovery workflows still need validation and implementation. Do not use this as a production service with real customer data until deployment, security, backup, privacy, and workflow tests are complete.
