@@ -68,7 +68,7 @@
     {
       label: 'Sell',
       items: [
-        { href: '/', label: 'Today', icon: Sun, exact: true },
+        { href: '/', label: 'Recovery', icon: Sun, exact: true },
         {
           href: '/pipeline',
           label: 'Pipeline',
