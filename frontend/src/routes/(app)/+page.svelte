@@ -49,7 +49,7 @@
   // list the sentence had just promised to lead with.
   let subText = $derived(
     summary.count === 0
-      ? 'Nothing needs you right now: you’re all clear for today.'
+      ? 'No overdue work or quiet deals need attention right now.'
       : summary.quiet_deals === 0
         ? `${plural(summary.count, 'thing wants', 'things want')} you today.`
         : `${plural(summary.count, 'thing wants', 'things want')} you today. ` +
@@ -63,7 +63,7 @@
   let hidden = $derived(Math.max(0, summary.count - summary.shown));
 </script>
 
-<PageHeader title="Today">
+<PageHeader title="Recovery Queue">
   {#snippet sub()}{subText}{/snippet}
 </PageHeader>
 
