@@ -52,7 +52,7 @@
 </script>
 
 <svelte:head>
-  <title>BottleCRM v2</title>
+  <title>LeadRescue — Revenue Recovery CRM</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 
