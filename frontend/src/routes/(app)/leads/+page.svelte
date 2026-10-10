@@ -97,7 +97,7 @@
             <th>Status</th>
             <th>Source</th>
             <th class="v2-r">Est. value</th>
-            <th>Last touch</th>
+            <th>Follow-up status</th>
             <th>Owner</th>
           </tr>
         </thead>
@@ -128,17 +128,17 @@
               conversation, and a column that quietly counts them stops being
               worth reading.
             -->
-              <td class:v2-muted={!stale(l)} class:overdue={stale(l)}>
-                {#if l.last_contacted}
-                  {relativeDays(l.last_contacted)}
-                {:else}
-                  <div>Not contacted</div>
-                  <!-- Stacked, matching the Company cell. Inline, these two ran
-                       together into "Not contactedadded 64 days ago". -->
-                  <div class="v2-table-secondary" data-m="hide">
-                    added {relativeDays(l.created_at)}
-                  </div>
-                {/if}
+              <td>
+                <Pill tone={stale(l) ? 'rust' : 'slate'}>
+                  {stale(l) ? 'Follow up' : l.last_contacted ? 'Recently touched' : 'New lead'}
+                </Pill>
+                <div class="v2-table-secondary" style="margin-top:4px">
+                  {#if l.last_contacted}
+                    {relativeDays(l.last_contacted)}
+                  {:else}
+                    Never contacted · added {relativeDays(l.created_at)}
+                  {/if}
+                </div>
               </td>
               <td data-m="hide"><Avatar name={l.assigned_to} size={22} /></td>
             </tr>
