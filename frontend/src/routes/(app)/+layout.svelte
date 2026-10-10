@@ -32,7 +32,7 @@
    * purpose. A tab bar that scrolls is a menu wearing a tab bar's clothes.
    */
   const TABS = [
-    { href: '/', label: 'Today', icon: Sun, exact: true },
+    { href: '/', label: 'Recovery', icon: Sun, exact: true },
     { href: '/pipeline', label: 'Pipeline', icon: Columns3 },
     { href: '/tickets', label: 'Tickets', icon: LifeBuoy },
     { href: '/invoices', label: 'Invoices', icon: Receipt }
