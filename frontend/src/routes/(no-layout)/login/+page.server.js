@@ -68,8 +68,33 @@ export async function load({ url, cookies, getClientAddress, request }) {
     throw redirect(307, '/org');
   }
 
+  // Never send users to Google's authorization endpoint with a blank client ID
+  // or a malformed callback URL. That produces Google's unhelpful HTTP 400 page.
+  const clientId = env.GOOGLE_CLIENT_ID?.trim();
+  const loginDomain = env.GOOGLE_LOGIN_DOMAIN?.trim();
+  if (!clientId || !loginDomain) {
+    console.warn('Google sign-in is disabled: GOOGLE_CLIENT_ID and GOOGLE_LOGIN_DOMAIN must be configured.');
+    return { google_url: null, google_unavailable: true };
+  }
+
+  let callbackUrl;
+  try {
+    const baseUrl = new URL(loginDomain);
+    const isLocalHttp = ['localhost', '127.0.0.1'].includes(baseUrl.hostname) && baseUrl.protocol === 'http:';
+    if (baseUrl.protocol !== 'https:' && !isLocalHttp) {
+      throw new Error('Google login domain must use HTTPS outside localhost.');
+    }
+    if (baseUrl.pathname !== '/' || baseUrl.search || baseUrl.hash) {
+      throw new Error('Google login domain must be an origin only, without a path.');
+    }
+    callbackUrl = new URL('/login', baseUrl.origin).toString();
+  } catch {
+    console.error('Google sign-in is disabled: GOOGLE_LOGIN_DOMAIN is not a valid site origin.');
+    return { google_url: null, google_unavailable: true };
+  }
+
   // Generate OAuth parameters and return login URL
-  return await generateOAuthUrl(cookies);
+  return await generateOAuthUrl(cookies, clientId, callbackUrl);
 }
 
 /**
@@ -160,7 +185,7 @@ async function handleOAuthCallback(code, returnedState, cookies, visitor) {
  * @param {import('@sveltejs/kit').Cookies} cookies - SvelteKit cookies
  * @returns {Promise<object>} Object containing the Google OAuth URL
  */
-async function generateOAuthUrl(cookies) {
+async function generateOAuthUrl(cookies, clientId, redirect_uri) {
   // Generate PKCE parameters
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = await generateCodeChallenge(codeVerifier);
@@ -175,11 +200,9 @@ async function generateOAuthUrl(cookies) {
   cookies.set('oauth_code_verifier', codeVerifier, getCookieOptions(oauthCookieMaxAge));
   cookies.set('oauth_state', state, getCookieOptions(oauthCookieMaxAge));
 
-  // Build Google OAuth URL with all required parameters
-  const redirect_uri = env.GOOGLE_LOGIN_DOMAIN + '/login';
-
+  // Build Google OAuth URL with validated configuration.
   const params = new URLSearchParams({
-    client_id: env.GOOGLE_CLIENT_ID,
+    client_id: clientId,
     redirect_uri,
     response_type: 'code',
     scope: GOOGLE_SCOPES,
