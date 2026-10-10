@@ -56,26 +56,30 @@
         <p>Welcome back. Choose how you'd like to continue.</p>
       </div>
 
-      <!-- Primary path. Google's mark keeps a white tile so it stays legible on
-           Ember; the whole button is the one Ember action on this screen. -->
-      <a
-        href={data['google_url']}
-        rel="external"
-        onclick={handleGoogleLogin}
-        class="v2-btn v2-btn-primary v2-btn-block"
-        style:pointer-events={isLoading ? 'none' : null}
-        style:opacity={isLoading ? '0.85' : null}
-      >
-        {#if isLoading}
-          <span class="v2-spin"></span>
-          <span>Redirecting…</span>
-        {:else}
-          <img src={imgGoogle} alt="" class="v2-auth-gicon" />
-          <span>Continue with Google</span>
-        {/if}
-      </a>
-
-      <div class="v2-auth-divider">or</div>
+      <!-- Do not show a broken Google link when OAuth is not configured or has failed. -->
+      {#if data['google_url']}
+        <a
+          href={data['google_url']}
+          rel="external"
+          onclick={handleGoogleLogin}
+          class="v2-btn v2-btn-primary v2-btn-block"
+          style:pointer-events={isLoading ? 'none' : null}
+          style:opacity={isLoading ? '0.85' : null}
+        >
+          {#if isLoading}
+            <span class="v2-spin"></span>
+            <span>Redirecting…</span>
+          {:else}
+            <img src={imgGoogle} alt="" class="v2-auth-gicon" />
+            <span>Continue with Google</span>
+          {/if}
+        </a>
+        <div class="v2-auth-divider">or</div>
+      {:else}
+        <div class="v2-auth-note" style="margin-bottom:14px">
+          Google sign-in is temporarily unavailable. Continue with email instead.
+        </div>
+      {/if}
 
       {#if magicLinkSent}
         <div class="v2-auth-note v2-auth-note-ok">
