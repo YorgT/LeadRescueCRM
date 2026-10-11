@@ -11,7 +11,7 @@ The first cloud-only layer is scheduled CI verification. It runs on GitHub-hoste
 
 ## Important: this is not yet an autonomous AI coder
 
-The repository currently has connected GitHub and Render integrations in the ChatGPT/Composio environment, but that does not give a GitHub Actions runner a persistent ChatGPT brain or an AI model endpoint. GitHub Models was retired in July 2026, and the GitHub Copilot Free plan does not include Copilot cloud agent. Therefore this commit deliberately does not pretend that AI code generation is configured.
+The repository currently has connected GitHub and Render integrations in the ChatGPT/Composio environment, but that does not give a GitHub Actions runner a persistent ChatGPT brain or an AI model endpoint. No compatible AI provider is configured for this runner yet, so this commit deliberately does not pretend that AI code generation is configured.
 
 To enable an AI coding step while keeping spend at $0, a compatible provider with a currently available free API quota must be selected and its credential stored as a GitHub Actions repository secret. Free quotas can change or run out; the agent must stop safely when unavailable. Do not commit credentials to the repository. Do not enable paid overages.
 
