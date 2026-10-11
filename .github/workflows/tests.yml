@@ -1,6 +1,10 @@
 name: CI
 
 on:
+  # Scheduled overnight verification; this runs tests only and never deploys.
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
   push:
     # Every branch, not just master. `pull_request` below already gates the
     # merge, so the branch filter here only decided whether work-in-progress
