@@ -66,3 +66,17 @@ For the inherited application's original installation instructions and architect
 ## Current status
 
 **Early build / validation stage.** The repository has been forked and branded for the LeadRescue direction. The customer problem, target niche, and proposed recovery workflows still need validation and implementation. Do not use this as a production service with real customer data until deployment, security, backup, privacy, and workflow tests are complete.
+
+## Open the app preview and check the latest changes
+
+In your Codespace terminal, run these commands from the repository root:
+
+```bash
+git pull origin master
+docker compose up --build
+```
+
+When the build finishes, open the **Ports** tab in Codespaces and open port **5181** in your browser to preview LeadRescue. If port 5181 is not listed, add/forward port `5181`. Keep the terminal running while you use the preview.
+
+Google sign-in will only work after valid Google OAuth credentials and the exact callback URL are configured; use email sign-in for the preview if OAuth is not configured.
+
